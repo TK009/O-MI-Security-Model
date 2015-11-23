@@ -27,7 +27,7 @@ public class TestAuth extends HttpServlet {
         response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
-        String title = "Facebook OAuth Test";
+        String title = "O-MI Login";
         String docType =
                 "<!doctype html public \"-//w3c//dtd html 4.0 " +
                         "transitional//en\">\n";
