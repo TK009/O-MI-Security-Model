@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by romanfilippov on 22/11/15.
@@ -14,6 +13,8 @@ public class OMIObject {
 
     @XmlElement(name="id",namespace = "odf.xsd")
     private String id;
+
+    public String xPath;
 
     @XmlElement(name="Object",namespace = "odf.xsd")
     private ArrayList<OMIObject> subObjects = new ArrayList<OMIObject>();
@@ -44,4 +45,6 @@ public class OMIObject {
     public void setInfoItems(ArrayList<OMIInfoItem> infoItems) {
         this.infoItems = infoItems;
     }
+
+    // GetXPath
 }

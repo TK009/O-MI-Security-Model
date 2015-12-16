@@ -13,12 +13,14 @@ public class OMIUser {
 
     }
 
+    // is not stored anywhere in DB for now
     public boolean isUserAuthorized;
+    // is not stored anywhere in DB for now
     public OMIUserType userType;
 
     public int id;
     public String username;
-    public String groups;
+    public String email;
 
     public OMIUser(OMIUserType userType)
     {

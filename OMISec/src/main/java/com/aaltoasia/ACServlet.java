@@ -23,8 +23,8 @@ public class ACServlet extends HttpServlet {
                       HttpServletResponse response)
             throws ServletException, IOException
     {
-//        response.setContentType("text/html");
 
+        // load index.html page
         RequestDispatcher view = request.getRequestDispatcher("/index.html");
         view.forward(request, response);
     }

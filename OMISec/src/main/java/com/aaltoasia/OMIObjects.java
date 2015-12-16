@@ -25,4 +25,6 @@ public class OMIObjects {
         this.objects = subObjects;
     }
 
+    public String xPath;
+
 }

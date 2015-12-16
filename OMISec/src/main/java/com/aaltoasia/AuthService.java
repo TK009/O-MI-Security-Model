@@ -47,30 +47,36 @@ public class AuthService {
         }
     }
 
-    public void writeObjectPermission(OMIObject obj, String groupName)
+    private void writePermissionToDB(String objName, String xPath, int groupID)
+    {
+        boolean writable = objName.indexOf("[W]") > -1;
+        boolean readable = objName.indexOf("[R]") > -1;
+        //objName = objName.replace("[W]","").replace("[R]","");
+        if (writable)
+            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, true);
+        else if (readable) {
+            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, false);
+        }
+    }
+
+    private void writeObjectPermission(OMIObject obj, int groupID)
     {
         String objName = obj.getId();
         if (objName != null) {
-
-            boolean writable = objName.indexOf("[W]") > -1;
-            boolean readable = objName.indexOf("[R]") > -1;
-            objName = objName.replace("[W]","").replace("[R]","");
-            if (writable)
-                DBHelper.getInstance().updateOrCreateRule(objName, groupName, writable);
-            else {
-                if (readable) {
-                    DBHelper.getInstance().updateOrCreateRule(objName, groupName, false);
-                }
-            }
+            writePermissionToDB(objName, obj.xPath, groupID);
         }
 
-        writePermissions(obj.getSubObjects(), groupName);
+        for (OMIInfoItem infoItem:obj.getInfoItems()) {
+            writePermissionToDB(infoItem.getName(), infoItem.xPath, groupID);
+        }
+
+        writePermissions(obj.getSubObjects(), groupID);
     }
 
-    public void writePermissions(ArrayList<OMIObject> mainObj, String groupName)
+    public void writePermissions(ArrayList<OMIObject> mainObj, int groupID)
     {
         for (OMIObject obj:mainObj) {
-            writeObjectPermission(obj, groupName);
+            writeObjectPermission(obj, groupID);
         }
     }
 
