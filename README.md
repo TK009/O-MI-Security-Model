@@ -53,4 +53,4 @@ Usage
 3. Change default Tomcat port in `conf/server.xml` to 8088
 4. Start Tomcat using `sh bin/startup.sh` command from Apache Tomcat installation directory
 
-Now use http://localhost:8088/O-MI for Login and Register new users and http://localhost:8088/AC for Access Control.
+Now use [http://localhost:8088/O-MI](http://localhost:8088/O-MI) for Login and Register new users and [http://localhost:8088/AC](http://localhost:8088/AC) for Access Control.
