@@ -4,14 +4,19 @@ Complementary authorization and access control modules for O-MI
 Dependencies
 ------------
 java-1.7
+
 apache-tomcat-8.0.28
 
 Java libraries
 --------------
 gson-2.4
+
 scribe-1.3.7
+
 sqlite-jdbc-3.8.11.2
+
 servlet-api-2.5.jar
+
 
 Repository includes IntelliJ IDEA project
 
