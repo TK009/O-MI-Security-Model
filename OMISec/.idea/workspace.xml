@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07187d92-cbb8-4c0b-a28f-21b9c7246785" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthAPIService.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webclient/tomcat_config_file/web.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIGroup.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIInfoItem.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIInfoItem.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIObject.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIObject.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIObjects.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIObjects.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIRule.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/OMIUser.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/ACServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/ACServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/DBHelper.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/DBHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/FacebookAuth.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/FacebookAuth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/LoginService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/LoginService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/PermissionService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/PermissionService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/TestAuth.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/TestAuth.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/install.sh" afterPath="$PROJECT_DIR$/install.sh" />
     </list>
     <ignored path="OMISec.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,8 +94,8 @@
       <file leaf-file-name="AuthService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6891271">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.22970903">
+              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1301,8 +1286,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6891271">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.22970903">
+          <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
