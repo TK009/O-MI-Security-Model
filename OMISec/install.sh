@@ -1,6 +1,6 @@
 #!/bin/bash
 export SCRIPT_DIR=$(cd "$(dirname "$0")"; pwd)
-cd src/main
+cd "$(dirname "$0")"; cd src/main
 printf "compiling classes..."
 javac -d . -cp ".:/java:../../lib/*" java/com/aaltoasia/db/*.java
 javac -d . -cp ".:/java:../../lib/*:../../servlet_lib/*" java/com/aaltoasia/*.java
