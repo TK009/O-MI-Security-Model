@@ -1,16 +1,25 @@
 package com.aaltoasia;
 
+import com.aaltoasia.db.OMIGroup;
+import com.aaltoasia.db.OMIRule;
+import com.aaltoasia.db.OMIUser;
+
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by romanfilippov on 19/11/15.
  */
 public class DBHelper {
 
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
     private static final DBHelper instance = new DBHelper();
     private DBHelper() {
+        logger.setLevel(Level.INFO);
         configureDB();
     }
 
@@ -61,13 +70,13 @@ public class DBHelper {
             stmt.executeUpdate();
 
             int res = stmt.getGeneratedKeys().getInt(1);
-            System.out.println("Group with name:"+groupName+" successfully created. ID="+res);
             stmt.close();
+            logger.info("Group with name:"+groupName+" successfully created. ID="+res);
             return res;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return -1;
         }
     }
@@ -80,11 +89,12 @@ public class DBHelper {
             stmt.setInt(2,groupID);
             stmt.executeUpdate();
             stmt.close();
+            logger.info("Group with ID:"+groupID+" successfully updated.");
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -104,13 +114,13 @@ public class DBHelper {
             stmt.setInt(1,groupID);
             stmt.executeUpdate();
 
-            System.out.println("Group with ID="+groupID+" deleted successfully. Related rules were removed and users removed from the group");
+            logger.info("Group with ID="+groupID+" deleted successfully. Related rules were removed and users removed from the group");
             stmt.close();
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -145,12 +155,12 @@ public class DBHelper {
             }
             rs.close();
             stmt.close();
-            System.out.println("Groups fetch request finished. Size:"+resultsArray.size());
+            logger.info("Groups fetch request finished. Size:"+resultsArray.size());
             return resultsArray;
 
         } catch (SQLException ex)
         {
-            System.out.println("Error! "+ex.getMessage());
+            logger.severe(ex.getMessage());
             return null;
         }
     }
@@ -187,12 +197,12 @@ public class DBHelper {
             }
             rs.close();
             stmt.close();
-            System.out.println("Groups fetch request finished. Size:"+resultsArray.size());
+            logger.info("Groups fetch request finished. Size:"+resultsArray.size());
             return resultsArray;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return null;
         }
     }
@@ -211,7 +221,7 @@ public class DBHelper {
             return -1;
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return -1;
         }
     }
@@ -225,12 +235,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("User with ID="+userID+" successfully added to the group with ID="+groupID);
+            logger.info("User with ID="+userID+" successfully added to the group with ID="+groupID);
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -254,12 +264,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("Users list successfully added to the group with ID="+groupID);
+            logger.info("Users list successfully added to the group with ID="+groupID);
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -273,12 +283,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("User with ID="+userID+" successfully removed from the group with ID="+groupID);
+            logger.info("User with ID="+userID+" successfully removed from the group with ID="+groupID);
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -291,12 +301,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("All users successfully removed from the group with ID="+groupID);
+            logger.info("All users successfully removed from the group with ID="+groupID);
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -328,12 +338,12 @@ public class DBHelper {
             // Add users from response
             addUsersToGroup(userIDs, groupID);
 
-            System.out.println("User list successfully updated for the group with ID="+groupID);
+            logger.info("User list successfully updated for the group with ID="+groupID);
             return true;
 
 //        } catch (SQLException ex)
 //        {
-//            System.out.println(ex.getMessage());
+//            logger.severe(ex.getMessage());
 //            return false;
 //        }
     }
@@ -348,17 +358,17 @@ public class DBHelper {
             int rows = stmt.executeUpdate();
             if (rows == 0)
             {
-                System.out.println("Record for HID:"+HID+" not found. Creating new.");
+                logger.info("Record for HID:"+HID+" not found. Creating new.");
                 createRule(HID, groupID, writable);
             } else {
-                System.out.println("Record for HID:"+HID+" was updated.");
+                logger.info("Record for HID:"+HID+" was updated.");
             }
             stmt.close();
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -373,12 +383,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("Record for HID:"+HID+" successfully created.");
+            logger.info("Record for HID:"+HID+" successfully created.");
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -402,12 +412,12 @@ public class DBHelper {
             rs.close();
             stmt.close();
 
-            System.out.println("Rules fetch request finished for group:"+groupID+". Size:"+resultsArray.size());
+            logger.info("Rules fetch request finished for group:"+groupID+". Size:"+resultsArray.size());
             return resultsArray;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return null;
         }
     }
@@ -421,12 +431,12 @@ public class DBHelper {
             stmt.executeUpdate();
             stmt.close();
 
-            System.out.println("Record for HID:"+HID+" successfully created.");
+            logger.info("Record for HID:"+HID+" successfully created.");
             return true;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -448,12 +458,12 @@ public class DBHelper {
             rs.close();
             stmt.close();
 
-            System.out.println("Users fetch request finished. Size:"+resultsArray.size());
+            logger.info("Users fetch request finished. Size:"+resultsArray.size());
             return resultsArray;
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return null;
         }
     }
@@ -477,6 +487,8 @@ public class DBHelper {
                 if (!res)
                     return false;
 
+
+                // Add new user to Default group (everybody belongs it)
                 int userID = stmt.getGeneratedKeys().getInt(1);
                 stmt = connection.prepareStatement("INSERT INTO USERS_GROUPS_RELATION(USER_ID,GROUP_ID) VALUES(?,?)");
                 stmt.setInt(1, userID);
@@ -484,6 +496,7 @@ public class DBHelper {
 
                 res = (stmt.executeUpdate() != 0);
                 stmt.close();
+                logger.info("New user created successfully. ID="+userID);
                 return res;
             } else {
                 return true;
@@ -491,7 +504,7 @@ public class DBHelper {
 
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage());
+            logger.severe(ex.getMessage());
             return false;
         }
     }
@@ -508,25 +521,25 @@ public class DBHelper {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(jdbcDriver);
         } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            logger.severe( e.getClass().getName() + ": " + e.getMessage() );
             return false;
         }
 
         if (!dbExists)
         {
-            System.out.println("Creating new database");
+            logger.info("Creating new database");
 
             try {
                 createTables();
             } catch (SQLException ex)
             {
-                System.out.println("Error while creating tables: "+ex.getMessage());
+                logger.info("Error while creating tables: "+ex.getMessage());
                 return false;
             }
 
-            System.out.println("Created tables successfully.");
+            logger.info("Created tables successfully.");
         } else {
-            System.out.println("Opened database successfully. Path:"+file.getAbsolutePath());
+            logger.info("Opened database successfully. Path:"+file.getAbsolutePath());
 
             DEFAULT_GROUP_ID = getGroupID("Default");
             if (DEFAULT_GROUP_ID == -1)

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * Servlet class that simply loads index.html page (access control main page)
+ * index.html file needs to be in ROOT folder of webserver
  * Created by romanfilippov on 22/11/15.
  */
 public class ACServlet extends HttpServlet {

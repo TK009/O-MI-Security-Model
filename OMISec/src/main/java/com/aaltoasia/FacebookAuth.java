@@ -1,5 +1,6 @@
 package com.aaltoasia;
 
+import com.aaltoasia.db.OMIUser;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.scribe.builder.ServiceBuilder;
@@ -7,7 +8,11 @@ import org.scribe.builder.api.FacebookApi;
 import org.scribe.model.*;
 import org.scribe.oauth.OAuthService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
+ * Helper class that handles Facebook Authentication
  * Created by romanfilippov on 12/11/15.
  */
 public class FacebookAuth {
@@ -17,10 +22,13 @@ public class FacebookAuth {
     private final String apiSecret = "44aa147103d0a84e8b092f4465e3e58a";
     private final String apiCallback = "http://localhost:8088/O-MI";
 
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
+    // see https://developers.facebook.com/docs/facebook-login/permissions
+    private final String fbScope = "email,public_profile";
+
     private Token accessToken;
-
     private static final Token EMPTY_TOKEN = null;
-
     private final OAuthService service;
 
     private static final FacebookAuth instance = new FacebookAuth();
@@ -30,13 +38,15 @@ public class FacebookAuth {
 
     private FacebookAuth()
     {
+        logger.setLevel(Level.INFO);
+
         this.accessToken = null;
 
         this.service = new ServiceBuilder()
                 .provider(FacebookApi.class)
                 .apiKey(apiKey)
                 .apiSecret(apiSecret)
-                .scope("email,public_profile")
+                .scope(fbScope)
                 .callback(apiCallback)
                 .build();
     }
@@ -78,7 +88,7 @@ public class FacebookAuth {
             return DBHelper.getInstance().createUserIfNotExists(newUser);
 
         } catch (Exception ex) {
-            System.out.println(ex.getCause() + ":" + ex.getMessage());
+            logger.severe(ex.getCause() + ":" + ex.getMessage());
             return false;
         }
     }

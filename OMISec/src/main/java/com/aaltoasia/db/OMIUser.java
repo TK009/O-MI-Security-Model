@@ -1,4 +1,4 @@
-package com.aaltoasia;
+package com.aaltoasia.db;
 
 /**
  * Created by romanfilippov on 18/11/15.

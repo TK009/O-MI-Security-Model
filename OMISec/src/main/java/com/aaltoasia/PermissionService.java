@@ -1,5 +1,6 @@
 package com.aaltoasia;
 
+import com.aaltoasia.db.*;
 import com.google.gson.*;
 
 import javax.servlet.ServletException;
@@ -15,14 +16,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by romanfilippov on 23/11/15.
  */
 public class PermissionService extends HttpServlet {
 
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
     public void init() throws ServletException
     {
+        logger.setLevel(Level.INFO);
         // Do required initialization
     }
 
@@ -93,7 +99,7 @@ public class PermissionService extends HttpServlet {
         if (writeRules != null) {
 
             String groupID = request.getParameter("groupID");
-            System.out.println("Received security policies for group with ID:" + groupID);
+            logger.info("Received security policies for group with ID:" + groupID);
 
             StringBuffer jb = new StringBuffer();
             String line = null;
@@ -102,7 +108,7 @@ public class PermissionService extends HttpServlet {
                 while ((line = reader.readLine()) != null)
                     jb.append(line);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.severe(e.getMessage());
             }
 
             StringReader reader = new StringReader(jb.toString());
@@ -125,7 +131,7 @@ public class PermissionService extends HttpServlet {
 
                 OMIObjects objResponse = (OMIObjects) unmarshaller.unmarshal(xsr);
                 String answer = "XML with permissions parsed successfully. Objects:" + objResponse.getObjects().size();
-                System.out.println(answer);
+                logger.info(answer);
 
                 writeXPath(objResponse);
 
@@ -133,7 +139,7 @@ public class PermissionService extends HttpServlet {
                 response.getWriter().write(answer);
 
             } catch (Exception ex) {
-                System.out.println(ex.getCause() + ex.getMessage());
+                logger.severe(ex.getCause() + ex.getMessage());
                 response.getWriter().write("ERROR!" + ex.getCause() + ex.getMessage());
             }
         } else if (writeGroups != null) {
@@ -145,7 +151,7 @@ public class PermissionService extends HttpServlet {
                 while ((line = reader.readLine()) != null)
                     jb.append(line);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                logger.severe(e.getMessage());
             }
 
 
@@ -165,7 +171,7 @@ public class PermissionService extends HttpServlet {
             }
 
             if (newGroupID == -1) {
-                System.out.println("Creating new group for name:"+groupName);
+                logger.info("Creating new group for name:"+groupName);
                 newGroupID = DBHelper.getInstance().createGroup(groupName);
 
                 if (newGroupID == -1) {
@@ -179,7 +185,7 @@ public class PermissionService extends HttpServlet {
                     response.getWriter().write("{\"result\":\"ok\",\"groupID\":\"" + newGroupID + "\"}");
                 }
             } else {
-                System.out.println("Modifying group with ID:"+newGroupID);
+                logger.info("Modifying group with ID:"+newGroupID);
                 if (DBHelper.getInstance().updateGroup(newGroupID, groupName)) {
                     DBHelper.getInstance().updateUsersForGroup(userIDs, newGroupID);
                     response.getWriter().write("{\"result\":\"ok\"}");

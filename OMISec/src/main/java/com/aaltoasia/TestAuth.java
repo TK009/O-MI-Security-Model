@@ -10,6 +10,7 @@ import java.io.PrintWriter;
  */
 public class TestAuth extends HttpServlet {
 
+
     private FacebookAuth auth;
 
     public void init() throws ServletException
@@ -21,8 +22,6 @@ public class TestAuth extends HttpServlet {
                       HttpServletResponse response)
             throws ServletException, IOException
     {
-        //auth = new FacebookAuth("485832608262799", "44aa147103d0a84e8b092f4465e3e58a", "http://otaniemi3d.cs.hut.fi/oauth_callback");
-
         // Set response content type
         response.setContentType("text/html");
 

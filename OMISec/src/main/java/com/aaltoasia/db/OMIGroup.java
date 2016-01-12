@@ -1,4 +1,4 @@
-package com.aaltoasia;
+package com.aaltoasia.db;
 
 import com.google.gson.annotations.SerializedName;
 
