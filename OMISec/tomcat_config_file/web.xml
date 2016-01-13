@@ -29,15 +29,15 @@
 
   <servlet>
    <servlet-name>TestAuth</servlet-name>
-   <servlet-class>com.aaltoasia.TestAuth</servlet-class>
+   <servlet-class>com.aaltoasia.omi.accontrol.TestAuth</servlet-class>
 </servlet>
 <servlet>
  <servlet-name>AccessControl</servlet-name>
- <servlet-class>com.aaltoasia.ACServlet</servlet-class>
+ <servlet-class>com.aaltoasia.omi.accontrol.ACServlet</servlet-class>
 </servlet>
 <servlet>
  <servlet-name>PermissionService</servlet-name>
- <servlet-class>com.aaltoasia.PermissionService</servlet-class>
+ <servlet-class>com.aaltoasia.omi.accontrol.PermissionService</servlet-class>
 </servlet>
 
 
