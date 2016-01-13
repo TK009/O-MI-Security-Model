@@ -2,46 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07187d92-cbb8-4c0b-a28f-21b9c7246785" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_3_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_http_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_io_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_security_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_server_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_servlet_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_jetty_jetty_util_9_2_7_v20150116.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_8_11_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/http/HttpServer.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_5.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/gson_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/sqlite_jdbc_3_8_11_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/gson-2.4.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/scribe-1.3.7.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/sqlite-jdbc-3.8.11.2.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/servlet_lib/servlet-api-2.5.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/aaltoasia/FacebookAuth.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/com/aaltoasia/TestAuth.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/ACServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/ACServlet.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthAPIService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/AuthAPIService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/AuthService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/AuthService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/ConfigHelper.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/ConfigHelper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/DBHelper.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/DBHelper.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/FacebookAuth.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/FacebookAuth.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/LoginService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/LoginService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/PermissionService.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/PermissionService.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/TestAuth.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/TestAuth.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIGroup.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIGroup.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIInfoItem.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIInfoItem.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIObject.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIObject.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIObjects.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIObjects.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIRule.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIRule.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/aaltoasia/db/OMIUser.java" afterPath="$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/db/objects/OMIUser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/install.sh" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tomcat_config_file/web.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OMISec.iml" afterPath="$PROJECT_DIR$/OMISec.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tomcat_config_file/web.xml" afterPath="$PROJECT_DIR$/tomcat_config_file/web.xml" />
     </list>
     <ignored path="OMISec.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,8 +40,8 @@
       <file leaf-file-name="HttpServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/http/HttpServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62068963">
-              <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#845#846#0" expanded="true" />
@@ -93,8 +56,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.3333335">
-              <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
+            <state vertical-scroll-proportion="-23.125">
+              <caret line="37" column="36" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -1202,14 +1165,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3333335">
-          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/AuthService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1234,10 +1189,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.125">
+          <caret line="37" column="36" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/aaltoasia/omi/accontrol/http/HttpServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62068963">
-          <caret line="66" column="43" selection-start-line="66" selection-start-column="43" selection-end-line="66" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="8" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#845#846#0" expanded="true" />
