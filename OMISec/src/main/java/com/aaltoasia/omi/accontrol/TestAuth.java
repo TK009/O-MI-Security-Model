@@ -1,5 +1,7 @@
 package com.aaltoasia.omi.accontrol;
 
+import com.aaltoasia.omi.accontrol.db.objects.OMIUser;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -37,8 +39,16 @@ public class TestAuth extends HttpServlet {
         {
             auth.getAccessToken(accessCode);
             String userInfo = auth.getUserInformation();
-            boolean authenticated = auth.registerOrLoginUser(userInfo);
+            OMIUser newUser = auth.createUserForInfo(userInfo);
+            boolean authenticated = auth.registerOrLoginUser(newUser);
             System.out.println(userInfo);
+
+            if (authenticated) {
+                // set session
+                HttpSession session = request.getSession(true);
+                session.setAttribute("userID", newUser.email);
+            }
+
             out.println(docType +
                     "<html>\n" +
                     "<head><title>" + title + "</title></head>\n" +
@@ -47,7 +57,7 @@ public class TestAuth extends HttpServlet {
                     "<div align=\"center\">" +
                      userInfo +
                     "</div>" +
-                    (authenticated ? "<h1 align=\"center\">User authenticated<br/><a href=\"http://localhost:8088/AC\">Go to AC Console</a></h1>" : "") +
+                    (authenticated ? "<h1 align=\"center\">User authenticated<br/><a href=\"http://localhost:8088/AC/webclient\">Go to AC Console</a></h1>" : "") +
                     "</body></html>");
         } else if (auth_type == null) {
 

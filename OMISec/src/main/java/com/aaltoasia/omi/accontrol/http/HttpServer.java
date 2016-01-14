@@ -1,18 +1,19 @@
 package com.aaltoasia.omi.accontrol.http;
 
-import com.aaltoasia.omi.accontrol.ACServlet;
 import com.aaltoasia.omi.accontrol.PermissionService;
 import com.aaltoasia.omi.accontrol.TestAuth;
-import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.handler.DefaultHandler;
-import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +30,35 @@ public class HttpServer implements Runnable
 
     public void run() {
         start();
+    }
+
+    public static class LoginFilter implements Filter {
+        @Override
+        public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+                throws IOException, ServletException {
+
+            HttpServletRequest request = (HttpServletRequest) req;
+            HttpServletResponse response = (HttpServletResponse) res;
+            HttpSession session = request.getSession(false);
+            String loginURI = request.getContextPath() + "/O-MI";
+
+            boolean loggedIn = session != null && session.getAttribute("userID") != null;
+            boolean loginRequest = request.getRequestURI().equals(loginURI);
+
+            if (loggedIn || loginRequest) {
+                chain.doFilter(request, response);
+            } else {
+                response.sendRedirect(loginURI);
+            }
+        }
+
+        @Override
+        public void init(FilterConfig arg0) throws ServletException {
+
+        }
+
+        @Override
+        public void destroy() {}
     }
 
     private void start()
@@ -49,6 +79,8 @@ public class HttpServer implements Runnable
         context.setResourceBase(pwdPath);
         context.setContextPath("/");
         server.setHandler(context);
+
+
 
         // add a simple Servlet at "/dynamic/*"
 //        ServletHolder holderDynamic = new ServletHolder("dynamic", DynamicServlet.class);
@@ -71,6 +103,9 @@ public class HttpServer implements Runnable
         ServletHolder holderPwd = new ServletHolder("default", DefaultServlet.class);
         holderPwd.setInitParameter("dirAllowed","true");
         context.addServlet(holderPwd,"/");
+
+        context.addFilter(LoginFilter.class, "/*",
+                EnumSet.of(DispatcherType.REQUEST));
 
         try
         {

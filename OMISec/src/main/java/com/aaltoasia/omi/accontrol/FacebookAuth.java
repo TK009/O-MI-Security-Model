@@ -75,7 +75,7 @@ public class FacebookAuth {
         return response.getBody();
     }
 
-    public boolean registerOrLoginUser(String userData) {
+    public OMIUser createUserForInfo(String userData) {
         try {
 
             JsonObject newUserJSON = new JsonParser().parse(userData).getAsJsonObject();
@@ -84,8 +84,27 @@ public class FacebookAuth {
             String userEmail = newUserJSON.getAsJsonPrimitive("email").getAsString();
             newUser.username = userName;
             newUser.email = userEmail;
+            return newUser;
+        } catch (Exception ex) {
+            logger.severe(ex.getCause() + ":" + ex.getMessage());
+            return null;
+        }
+    }
 
-            // TODO: add login - i.e. settings cookies or session
+    public boolean registerOrLoginUser(OMIUser newUser) {
+        try {
+
+            return DBHelper.getInstance().createUserIfNotExists(newUser);
+
+        } catch (Exception ex) {
+            logger.severe(ex.getCause() + ":" + ex.getMessage());
+            return false;
+        }
+    }
+    public boolean registerOrLoginUser(String userData) {
+        try {
+
+            OMIUser newUser = createUserForInfo(userData);
             return DBHelper.getInstance().createUserIfNotExists(newUser);
 
         } catch (Exception ex) {
