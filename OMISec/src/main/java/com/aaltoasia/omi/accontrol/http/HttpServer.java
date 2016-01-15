@@ -41,11 +41,16 @@ public class HttpServer implements Runnable
             HttpServletResponse response = (HttpServletResponse) res;
             HttpSession session = request.getSession(false);
             String loginURI = request.getContextPath() + "/O-MI";
+            String permissionServiceURI = request.getContextPath() + "/PermissionService";
 
             boolean loggedIn = session != null && session.getAttribute("userID") != null;
             boolean loginRequest = request.getRequestURI().equals(loginURI);
+            boolean permissionRequest = request.getRequestURI().contains(permissionServiceURI);
 
-            if (loggedIn || loginRequest) {
+            if (loggedIn || loginRequest || permissionRequest) {
+//                if (loggedIn)
+//                    System.out.println("Attribute:"+ session.getAttribute("userID"));
+
                 chain.doFilter(request, response);
             } else {
                 response.sendRedirect(loginURI);

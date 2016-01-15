@@ -5,9 +5,7 @@ import com.aaltoasia.omi.accontrol.db.objects.*;
 import com.google.gson.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLInputFactory;
@@ -96,8 +94,60 @@ public class PermissionService extends HttpServlet {
 
         String writeRules = request.getParameter("writeRules");
         String writeGroups = request.getParameter("writeGroups");
+        String ac = request.getParameter("ac");
 
-        if (writeRules != null) {
+        if (ac != null) {
+
+            logger.info("Received Access Control request");
+//            Cookie[] cookies = request.getCookies();
+//            System.out.println("Cookies:");
+//            for (Cookie ck: cookies) {
+//                System.out.println(ck.getName()+ck.getValue());
+//            }
+            HttpSession httpSession = request.getSession(false);
+            if (httpSession == null) {
+                logger.info("Session is not found!");
+                response.getWriter().write("false");
+            } else {
+                logger.info("Valid session is found!");
+                String userEmail = (String)httpSession.getAttribute("userID");
+                //logger.info("UserCredential: "+userEmail);
+                boolean isWrite = request.getParameter("write").equalsIgnoreCase("true");
+
+                StringBuffer jb = new StringBuffer();
+                String line = null;
+                try {
+                    BufferedReader reader = request.getReader();
+                    while ((line = reader.readLine()) != null)
+                        jb.append(line);
+                } catch (Exception e) {
+                    logger.severe(e.getMessage());
+                }
+
+
+                JsonObject paths = new JsonParser().parse(jb.toString()).getAsJsonObject();
+                JsonArray json_paths = paths.getAsJsonArray("paths");
+
+                String logString = "";
+
+                ArrayList<String> paths_to_check = new ArrayList<>(json_paths.size());
+                for (int i = 0; i < json_paths.size(); i++) {
+                    String nextPath = json_paths.get(i).getAsString();
+                    logString += nextPath+"\n";
+                    paths_to_check.add(nextPath);
+                }
+
+                logger.info("Received resource access requests." +
+                        "\nUserIdentifier:"+userEmail+
+                        "\nPaths:\n"+logString+
+                        "isWrite:"+isWrite);
+
+                boolean result = AuthService.getInstance().checkPermissions(paths_to_check, userEmail, isWrite);
+//                logger.info("RESULT:"+result);
+                response.getWriter().write(result ? "true" : "false");
+            }
+
+        } else if (writeRules != null) {
 
             String groupID = request.getParameter("groupID");
             logger.info("Received security policies for group with ID:" + groupID);

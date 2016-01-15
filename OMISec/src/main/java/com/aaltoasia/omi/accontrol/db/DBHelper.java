@@ -510,6 +510,84 @@ public class DBHelper {
         }
     }
 
+    public boolean checkUserPermissions(ArrayList<String> paths, String userEmail, boolean isWrite)
+    {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT GROUP_ID FROM USERS_GROUPS_RELATION WHERE USER_ID=(SELECT ID FROM USERS WHERE EMAIL=?)");
+            stmt.setString(1,userEmail);
+            ResultSet rs = stmt.executeQuery();
+            //ArrayList<Integer> groupIDs = new ArrayList<>();
+
+            String groupIDs = "(";
+            String queryPlaceHolder = "(";
+
+            boolean hasNext = rs.next();
+            while (hasNext) {
+
+                groupIDs += rs.getInt(1);
+                hasNext = rs.next();
+                if (hasNext) {
+                    groupIDs += ",";
+                }
+            }
+
+//            while (rs.next()) {
+//
+//                if (rs.isLast()) {
+//                    groupIDs += rs.getInt(1);
+//                    queryPlaceHolder += "?";
+//                }
+//                else {
+//                    groupIDs += rs.getInt(1) + ",";
+//                    queryPlaceHolder += "?,";
+//                }
+//
+//                //groupIDs.add(new Integer(rs.getInt(1)));
+//            }
+
+            groupIDs+= ")";
+            queryPlaceHolder += ")";
+
+            logger.info("Resource access request for groups "+groupIDs);
+
+            stmt.close();
+            stmt = connection.prepareStatement("SELECT WRITE_PERMISSIONS FROM RULES WHERE HID=? AND GROUP_ID IN " + groupIDs);
+
+            for (String omiPath:paths) {
+                stmt.setString(1, omiPath);
+                rs = stmt.executeQuery();
+
+                logger.info("Checking permissions for HID:"+omiPath);
+
+                // No rules for that HID, deny all request
+                if (!rs.isBeforeFirst()) {
+                    logger.info("No permissions for HID:"+omiPath+" found. Request denied.");
+                    stmt.close();
+                    return false;
+                } else {
+                    rs.next();
+                    boolean db_write = rs.getInt(1) == 1;
+
+                    // If in DB we have read permissions but write is requested
+                    if (!db_write && isWrite) {
+                        logger.info("Read permission for HID:"+omiPath+" found, but write requested. Request denied.");
+                        stmt.close();
+                        return false;
+                    }
+
+                    logger.info("Requested permissions for HID:"+omiPath+" successfully found. Request allowed.");
+                }
+            }
+
+            return true;
+
+        } catch (SQLException ex)
+        {
+            logger.severe(ex.getMessage());
+            return false;
+        }
+    }
+
     public boolean configureDB()
     {
         String dbName = ConfigHelper.dbName + ".db";
