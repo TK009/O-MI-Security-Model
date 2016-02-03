@@ -1,7 +1,8 @@
 package com.aaltoasia.omi.accontrol.http;
 
+import com.aaltoasia.omi.accontrol.AuthService;
 import com.aaltoasia.omi.accontrol.PermissionService;
-import com.aaltoasia.omi.accontrol.TestAuth;
+import com.aaltoasia.omi.accontrol.AuthServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.DefaultServlet;
@@ -43,11 +44,25 @@ public class HttpServer implements Runnable
             String loginURI = request.getContextPath() + "/O-MI";
             String permissionServiceURI = request.getContextPath() + "/PermissionService";
 
-            boolean loggedIn = session != null && session.getAttribute("userID") != null;
+            boolean loggedIn = (session != null) && (session.getAttribute("userID") != null);
             boolean loginRequest = request.getRequestURI().equals(loginURI);
             boolean permissionRequest = request.getRequestURI().contains(permissionServiceURI);
 
-            if (loggedIn || loginRequest || permissionRequest) {
+            boolean hasRights = false;
+
+            if (loggedIn) {
+                String email = session.getAttribute("userID").toString();
+
+                hasRights = AuthService.getInstance().isAdministrator(email);
+
+                if (hasRights)
+                    System.out.println("User has rights to enter AC Console");
+                else
+                    System.out.println("User does not have rights to enter AC Console");
+
+            }
+
+            if (hasRights || loginRequest || permissionRequest) {
 //                if (loggedIn)
 //                    System.out.println("Attribute:"+ session.getAttribute("userID"));
 
@@ -100,7 +115,7 @@ public class HttpServer implements Runnable
         ServletHolder permissionService = new ServletHolder(new PermissionService());
         context.addServlet(permissionService, "/PermissionService/*");
 
-        ServletHolder testAuth = new ServletHolder(new TestAuth());
+        ServletHolder testAuth = new ServletHolder(new AuthServlet());
         context.addServlet(testAuth, "/O-MI/*");
 
         // Lastly, the default servlet for root content (always needed, to satisfy servlet spec)

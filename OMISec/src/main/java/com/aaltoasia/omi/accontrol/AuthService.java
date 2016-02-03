@@ -77,4 +77,8 @@ public class AuthService {
     public boolean checkPermissions(ArrayList<String> paths, String userEmail, boolean isWrite) {
         return DBHelper.getInstance().checkUserPermissions(paths, userEmail, isWrite);
     }
+
+    public boolean isAdministrator(String email) {
+        return DBHelper.getInstance().checkAdminPermissions(email);
+    }
 }

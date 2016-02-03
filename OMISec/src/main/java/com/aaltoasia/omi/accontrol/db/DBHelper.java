@@ -5,7 +5,10 @@ import com.aaltoasia.omi.accontrol.db.objects.OMIGroup;
 import com.aaltoasia.omi.accontrol.db.objects.OMIRule;
 import com.aaltoasia.omi.accontrol.db.objects.OMIUser;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -58,9 +61,63 @@ public class DBHelper {
                 " USER_ID          INT    NOT NULL," +
                 " GROUP_ID          INT    NOT NULL)";
         stmt.executeUpdate(sql);
+
+        sql = "CREATE TABLE ADMINISTRATORS " +
+                "(ID INTEGER PRIMARY KEY NOT NULL," +
+                "EMAIL VARCHAR(256) UNIQUE NOT NULL)";
+        stmt.executeUpdate(sql);
         stmt.close();
 
+        createAdministrators();
+
         DEFAULT_GROUP_ID = createGroup("Default");
+    }
+
+    public void createAdmin(String email) {
+
+        try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO ADMINISTRATORS(EMAIL) VALUES(?)")){
+            stmt.setString(1,email);
+            stmt.executeUpdate();
+
+            int res = stmt.getGeneratedKeys().getInt(1);
+            stmt.close();
+            logger.info("Administrator with email:"+email+" successfully created. ID="+res);
+
+        } catch (SQLException ex)
+        {
+            logger.severe(ex.getMessage());
+        }
+    }
+
+    public boolean checkAdminPermissions(String userID)
+    {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ADMINISTRATORS WHERE EMAIL=?");
+            stmt.setString(1, userID);
+            ResultSet rs = stmt.executeQuery();
+            boolean res = rs.next();
+            stmt.close();
+            return res;
+
+        } catch (SQLException ex)
+        {
+            logger.severe(ex.getMessage());
+            return false;
+        }
+    }
+
+    public void createAdministrators()
+    {
+        try(BufferedReader br = new BufferedReader(new FileReader("admin_list.txt"))) {
+            String line = br.readLine();
+
+            while (line != null) {
+                createAdmin(line);
+                line = br.readLine();
+            }
+        } catch (Exception ex) {
+            logger.severe(ex.getMessage());
+        }
     }
 
     public int createGroup(String groupName)

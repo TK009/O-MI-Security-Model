@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 /**
  * Created by romanfilippov on 12/11/15.
  */
-public class TestAuth extends HttpServlet {
+public class AuthServlet extends HttpServlet {
 
 
     private FacebookAuth auth;
