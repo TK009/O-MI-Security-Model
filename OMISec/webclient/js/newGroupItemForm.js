@@ -59,6 +59,9 @@
       results = {};
       results["name"] = $("#groupItemName").val();
       results.values = $("#addUsersSelect").chosen().val();
+      if (results.values == null) {
+        results.values = [];
+      }
       if (groupUnderEdit != null) {
         results["id"] = groupUnderEdit["id"];
         groupUnderEdit = null;
