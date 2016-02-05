@@ -41,15 +41,15 @@ public class AuthService {
         return user;
     }
 
-    private void writePermissionToDB(String objName, String xPath, int groupID)
+    private void writePermissionToDB(String objName, String xPath, int groupID, boolean objectRule)
     {
         boolean writable = objName.indexOf("[W]") > -1;
         boolean readable = objName.indexOf("[R]") > -1;
         //objName = objName.replace("[W]","").replace("[R]","");
         if (writable)
-            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, true);
+            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, true, objectRule);
         else if (readable) {
-            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, false);
+            DBHelper.getInstance().updateOrCreateRule(xPath, groupID, false, objectRule);
         }
     }
 
@@ -57,11 +57,11 @@ public class AuthService {
     {
         String objName = obj.getId();
         if (objName != null) {
-            writePermissionToDB(objName, obj.xPath, groupID);
+            writePermissionToDB(objName, obj.xPath, groupID, true);
         }
 
         for (OMIInfoItem infoItem:obj.getInfoItems()) {
-            writePermissionToDB(infoItem.getName(), infoItem.xPath, groupID);
+            writePermissionToDB(infoItem.getName(), infoItem.xPath, groupID, false);
         }
 
         writePermissions(obj.getSubObjects(), groupID);

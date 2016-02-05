@@ -48,7 +48,8 @@ public class DBHelper {
                 "(ID INTEGER PRIMARY KEY     NOT NULL," +
                 " HID            TEXT     NOT NULL," +
                 " GROUP_ID          INT    NOT NULL," +
-                " WRITE_PERMISSIONS   INT     NOT NULL)";
+                " WRITE_PERMISSIONS   INT     NOT NULL," +
+                " OBJECT_RULE INT NOT NULL)";
         stmt.executeUpdate(sql);
 
         sql = "CREATE TABLE GROUPS " +
@@ -406,18 +407,19 @@ public class DBHelper {
 //        }
     }
 
-    public boolean updateOrCreateRule(String HID, int groupID, boolean writable)
+    public boolean updateOrCreateRule(String HID, int groupID, boolean writable, boolean objectRule)
     {
         try {
-            PreparedStatement stmt = connection.prepareStatement("UPDATE RULES SET WRITE_PERMISSIONS = ? WHERE HID = ? AND GROUP_ID = ?;");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE RULES SET WRITE_PERMISSIONS = ?, OBJECT_RULE = ? WHERE HID = ? AND GROUP_ID = ?;");
             stmt.setBoolean(1,writable);
-            stmt.setString(2,HID);
-            stmt.setInt(3,groupID);
+            stmt.setBoolean(2,objectRule);
+            stmt.setString(3,HID);
+            stmt.setInt(4,groupID);
             int rows = stmt.executeUpdate();
             if (rows == 0)
             {
                 logger.info("Record for HID:"+HID+" not found. Creating new.");
-                createRule(HID, groupID, writable);
+                createRule(HID, groupID, writable, objectRule);
             } else {
                 logger.info("Record for HID:"+HID+" was updated.");
             }
@@ -431,13 +433,14 @@ public class DBHelper {
         }
     }
 
-    public boolean createRule(String HID, int groupID, boolean writable)
+    public boolean createRule(String HID, int groupID, boolean writable, boolean objectRule)
     {
         try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO RULES(HID,GROUP_ID,WRITE_PERMISSIONS) VALUES(?,?,?)");
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO RULES(HID,GROUP_ID,WRITE_PERMISSIONS,OBJECT_RULE) VALUES(?,?,?,?)");
             stmt.setString(1,HID);
             stmt.setInt(2,groupID);
             stmt.setBoolean(3,writable);
+            stmt.setBoolean(4,objectRule);
             stmt.executeUpdate();
             stmt.close();
 
@@ -608,10 +611,12 @@ public class DBHelper {
             logger.info("Resource access request for groups "+groupIDs);
 
             stmt.close();
-            stmt = connection.prepareStatement("SELECT WRITE_PERMISSIONS FROM RULES WHERE HID=? AND GROUP_ID IN " + groupIDs);
+            stmt = connection.prepareStatement("SELECT WRITE_PERMISSIONS FROM RULES WHERE " +
+                    "(HID=? OR ((? LIKE '%'||HID||'%') AND OBJECT_RULE=1)) AND GROUP_ID IN " + groupIDs);
 
             for (String omiPath:paths) {
                 stmt.setString(1, omiPath);
+                stmt.setString(2, omiPath);
                 rs = stmt.executeQuery();
 
                 logger.info("Checking permissions for HID:"+omiPath);
@@ -622,8 +627,13 @@ public class DBHelper {
                     stmt.close();
                     return false;
                 } else {
-                    rs.next();
-                    boolean db_write = rs.getInt(1) == 1;
+                    boolean db_write = false;
+                    while (rs.next()) {
+                        db_write = rs.getInt(1) == 1;
+
+                        if (db_write == true)
+                            break;
+                    }
 
                     // If in DB we have read permissions but write is requested
                     if (!db_write && isWrite) {
