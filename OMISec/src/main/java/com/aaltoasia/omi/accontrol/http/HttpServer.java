@@ -97,7 +97,7 @@ public class HttpServer implements Runnable
         // This is also known as the handler tree (in jetty speak)
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setResourceBase(pwdPath);
-        context.setContextPath("/");
+        context.setContextPath("/security");
         server.setHandler(context);
 
 
