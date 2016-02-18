@@ -7,7 +7,7 @@
     var my;
     my = WebOmi.formLogic = {};
 
-    my.authServer = "http://localhost:8088";
+    my.authServer = "http://localhost:8009/security";
     my.setRequest = function(xml) {
       var mirror;
       mirror = WebOmi.consts.requestCodeMirror;

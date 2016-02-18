@@ -21,7 +21,7 @@ public class FacebookAuth {
     // TODO: Move apiSecret out of here
     private final String apiKey = "485832608262799";
     private final String apiSecret = "44aa147103d0a84e8b092f4465e3e58a";
-    private final String apiCallback = "http://localhost:8088/O-MI";
+    private final String apiCallback = "http://localhost:8009/security/O-MI";
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
